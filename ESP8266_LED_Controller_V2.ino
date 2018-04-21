@@ -124,29 +124,6 @@ void loop() {
     analogWrite(GREEN_LED, 0);
   }
 
-   if (request.indexOf("/CYCLE") != -1) {
-
-   unsigned int rgbColor[3];
-
-  // Start Cycling Colors
-  //
-  rgbColor[0] = 255;
-  rgbColor[1] = 0;
-  rgbColor[2] = 0;  
-
-    for (int decColor = 0; decColor < 3; decColor += 1) {
-    int incColor = decColor == 2 ? 0 : decColor + 1;
-
-    for(int i = 0; i < 255; i += 1) {
-      rgbColor[decColor] -= 1;
-      rgbColor[incColor] += 1;
-      
-      setColorRgb(rgbColor[0], rgbColor[1], rgbColor[2]);
-      delay(5);
-    }
-  }
- }
-
   // Return HTTP Response
   //
   client.println("HTTP/1.1 200 OK");
@@ -162,7 +139,6 @@ void loop() {
   client.println("<a href=\"/COLOR=BLUE\"\"><button>Blue </button></a> ");
   client.println("<a href=\"/COLOR=WHITE\"\"><button>White </button></a> ");
   client.println("<a href=\"/COLOR=VIOLET\"\"><button>Violet </button></a> ");
-  client.println("<a href=\"CYCLE\"\"><button>Cycle </button></a> ");
   client.println("</html>");
  
   delay(1);
@@ -170,9 +146,3 @@ void loop() {
   Serial.println("");
 
 }
-
-void setColorRgb(unsigned int red, unsigned int green, unsigned int blue) {
-  analogWrite(RED_LED, red);
-  analogWrite(GREEN_LED, green);
-  analogWrite(BLUE_LED, blue);
- }
